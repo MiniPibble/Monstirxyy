@@ -1,0 +1,240 @@
+-- Services
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
+
+-- Create GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "MonstirxyyHub"
+ScreenGui.Parent = CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 280, 0, 320)
+MainFrame.Position = UDim2.new(0.5, -140, 0.5, -160)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MainFrame.BorderSizePixel = 0
+MainFrame.ClipsDescendants = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Thickness = 2
+UIStroke.Color = Color3.fromRGB(45, 45, 45)
+UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke.Parent = MainFrame
+
+-- Top Bar
+local TopBar = Instance.new("Frame")
+TopBar.Name = "TopBar"
+TopBar.Size = UDim2.new(1, 0, 0, 40)
+TopBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TopBar.BorderSizePixel = 0
+TopBar.Parent = MainFrame
+
+local TopCorner = Instance.new("UICorner")
+TopCorner.CornerRadius = UDim.new(0, 12)
+TopCorner.Parent = TopBar
+
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -50, 1, 0)
+Title.Position = UDim2.new(0, 15, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "MonstirxyyHub Sab/mm2"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 16
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = TopBar
+
+-- Hide Button (-)
+local HideButton = Instance.new("TextButton")
+HideButton.Name = "HideButton"
+HideButton.Size = UDim2.new(0, 30, 0, 30)
+HideButton.Position = UDim2.new(1, -35, 0, 5)
+HideButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+HideButton.Text = "-"
+HideButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+HideButton.TextSize = 20
+HideButton.Font = Enum.Font.GothamBold
+HideButton.Parent = TopBar
+
+local HideCorner = Instance.new("UICorner")
+HideCorner.CornerRadius = UDim.new(1, 0)
+HideCorner.Parent = HideButton
+
+-- Circle Open Button
+local OpenButton = Instance.new("ImageButton")
+OpenButton.Name = "OpenButton"
+OpenButton.Size = UDim2.new(0, 50, 0, 50)
+OpenButton.Position = UDim2.new(0.05, 0, 0.5, -25)
+OpenButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+OpenButton.Image = "rbxassetid://73818282156097"
+OpenButton.Visible = false
+OpenButton.Parent = ScreenGui
+
+local OpenCorner = Instance.new("UICorner")
+OpenCorner.CornerRadius = UDim.new(1, 0)
+OpenCorner.Parent = OpenButton
+
+local OpenStroke = Instance.new("UIStroke")
+OpenStroke.Thickness = 2
+OpenStroke.Color = Color3.fromRGB(255, 255, 255)
+OpenStroke.Parent = OpenButton
+
+-- Container for Toggles
+local Container = Instance.new("Frame")
+Container.Name = "Container"
+Container.Size = UDim2.new(1, -20, 1, -55)
+Container.Position = UDim2.new(0, 10, 0, 50)
+Container.BackgroundTransparency = 1
+Container.Parent = MainFrame
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Padding = UDim.new(0, 8)
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Parent = Container
+
+-- Toggle Template Function
+local function CreateToggle(name, callback)
+    local ToggleFrame = Instance.new("Frame")
+    ToggleFrame.Name = name .. "Toggle"
+    ToggleFrame.Size = UDim2.new(1, 0, 0, 45)
+    ToggleFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    ToggleFrame.Parent = Container
+
+    local TCorner = Instance.new("UICorner")
+    TCorner.CornerRadius = UDim.new(0, 8)
+    TCorner.Parent = ToggleFrame
+
+    local TTitle = Instance.new("TextLabel")
+    TTitle.Size = UDim2.new(1, -60, 1, 0)
+    TTitle.Position = UDim2.new(0, 12, 0, 0)
+    TTitle.BackgroundTransparency = 1
+    TTitle.Text = name
+    TTitle.TextColor3 = Color3.fromRGB(220, 220, 220)
+    TTitle.TextSize = 14
+    TTitle.Font = Enum.Font.GothamMedium
+    TTitle.TextXAlignment = Enum.TextXAlignment.Left
+    TTitle.Parent = ToggleFrame
+
+    local Switch = Instance.new("TextButton")
+    Switch.Size = UDim2.new(0, 40, 0, 20)
+    Switch.Position = UDim2.new(1, -50, 0.5, -10)
+    Switch.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    Switch.Text = ""
+    Switch.Parent = ToggleFrame
+
+    local SCorner = Instance.new("UICorner")
+    SCorner.CornerRadius = UDim.new(1, 0)
+    SCorner.Parent = Switch
+
+    local Indicator = Instance.new("Frame")
+    Indicator.Size = UDim2.new(0, 16, 0, 16)
+    Indicator.Position = UDim2.new(0, 2, 0.5, -8)
+    Indicator.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+    Indicator.Parent = Switch
+
+    local ICorner = Instance.new("UICorner")
+    ICorner.CornerRadius = UDim.new(1, 0)
+    ICorner.Parent = Indicator
+
+    local toggled = false
+    Switch.MouseButton1Click:Connect(function()
+        toggled = not toggled
+        local targetPos = toggled and UDim2.new(1, -18, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)
+        local targetColor = toggled and Color3.fromRGB(0, 200, 100) or Color3.fromRGB(50, 50, 50)
+        
+        TweenService:Create(Indicator, TweenInfo.new(0.3), {Position = targetPos}):Play()
+        TweenService:Create(Switch, TweenInfo.new(0.3), {BackgroundColor3 = targetColor}):Play()
+        
+        callback(toggled)
+    end)
+end
+
+-- Create Features
+CreateToggle("Freeze Trade", function(state) print("Freeze Trade:", state) end)
+CreateToggle("Auto Accept", function(state) print("Auto Accept:", state) end)
+CreateToggle("Auto Put Valuables", function(state) print("Auto Put:", state) end)
+
+-- PREMIUM SMOOTH DRAGGING FUNCTION (Works for Mobile & PC)
+local function MakeSmoothDraggable(obj, dragPart)
+	local dragging = false
+	local dragInput
+	local dragStart
+	local startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		local targetPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		-- The "Premium" feel: 0.15s tween makes it slide nicely
+		TweenService:Create(obj, TweenInfo.new(0.15, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = targetPos}):Play()
+	end
+
+	dragPart.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = obj.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	dragPart.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+
+-- Apply dragging to both MainFrame and OpenButton
+MakeSmoothDraggable(MainFrame, TopBar)
+MakeSmoothDraggable(OpenButton, OpenButton)
+
+-- Functionality: Hide/Show
+HideButton.MouseButton1Click:Connect(function()
+    MainFrame:TweenSize(UDim2.new(0, 280, 0, 0), "Out", "Quint", 0.5, true)
+    task.wait(0.5)
+    MainFrame.Visible = false
+    OpenButton.Visible = true
+    OpenButton:TweenSize(UDim2.new(0, 50, 0, 50), "Out", "Back", 0.5, true)
+end)
+
+OpenButton.MouseButton1Click:Connect(function()
+    -- Only open if we weren't just dragging it
+    OpenButton:TweenSize(UDim2.new(0, 0, 0, 0), "In", "Back", 0.3, true)
+    task.wait(0.3)
+    OpenButton.Visible = false
+    MainFrame.Visible = true
+    MainFrame:TweenSize(UDim2.new(0, 280, 0, 320), "Out", "Quint", 0.5, true)
+end)
+
+-- Button Hover Effects
+local function AddButtonFeedback(btn)
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundTransparency = 0.2}):Play()
+    end)
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
+    end)
+end
+
+AddButtonFeedback(HideButton)
